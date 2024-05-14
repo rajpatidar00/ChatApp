@@ -50,6 +50,17 @@ body {
 
 }
 
+.chat-theme{
+  background: rgb(26, 31, 41) url(../src//assets/images/couple-image01.jpg);
+  /* background-image: url(../src//assets/images/chat-theme.jpg); */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  background-blend-mode: soft-light;
+
+}
+
 .absolute-icon {
   position: absolute;
   right: -4px;

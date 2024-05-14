@@ -150,7 +150,7 @@ export const Chat = () => {
 
   return (
     <>
-      <div className={`flex flex-col px-2 overflow-y-auto no-scrollbar h-4/5`} ref={chatBox}>
+      <div className={`flex flex-col px-2 overflow-y-auto no-scrollbar h-4/5 chat-theme`} ref={chatBox}>
         {totalMessages.map((message, index) => {
           const messageDate = new Date(message.timestamp).toLocaleDateString();
 

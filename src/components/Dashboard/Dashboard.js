@@ -2,7 +2,8 @@ import React from "react";
 import bell from "./../../assets/images/logo-bell.png";
 
 import back from "./../../assets/images/left.png";
-import fav from "./../../assets/images/love.png";
+import notFavorite from "./../../assets/images/love.png";
+import favorite from "./../../assets/images/heart.png";
 
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,10 +11,16 @@ import { Chat } from "./Chat";
 import ChatHub from "./ChatHub";
 import Input from "./Input";
 import { openChatHub } from "../../services/redux/chatHubReducer";
+import api from "../../services/api";
 
 
 const ActiveChat = ({ recipientUser }) => {
+  const currentUser = JSON.parse(localStorage.getItem("user"));
   const dispatch = useDispatch();
+
+  const handleFavouriteUser = async () => {
+    await api.post('/api/user/favorite', { favoriteUserId: recipientUser?._id });
+  }
 
   return (
     <div className="h-16 w-full flex justify-between bg-white  rounded-t-xl border-b border-gray-300 topBar-bg
@@ -46,7 +53,12 @@ const ActiveChat = ({ recipientUser }) => {
       <div className=" h-auto flex p-4 items-center ">
         <div className=" pl-5 text-blue-600">
           <div className="flex flex-row justify-end">
-            <img className="h-6 w-6 " src={fav} />
+            <button onClick={handleFavouriteUser}>
+              {
+                currentUser?.favorites?.includes(recipientUser?._id) ? <img className="h-6 w-6 " src={favorite} /> : <img className="h-6 w-6 " src={notFavorite} />
+              }
+
+            </button>
             <img className="h-6 w-6 ml-4" src={bell} />
           </div>
         </div>
@@ -69,7 +81,7 @@ function Dashboard() {
     <>
       <ChatHub side="left" />
       <div className="flex flex-col items-center w-full h-screen bg-red-300 chat-home-bg p-10 max-sm:p-0">
-        <div className="w-3/6 max-sm:w-full h-full bg-white rounded-xl">
+        <div className="w-3/6 max-sm:w-full h-full bg-white rounded-xl max-sm:rounded-none">
           <ActiveChat recipientUser={recipientUser} />
           <Chat />
           {/* <div className="w-3/5 h-auto bg-gray-100 rounded-xl max-sm:rounded max-sm:w-full">
